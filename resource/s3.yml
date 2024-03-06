@@ -1,0 +1,20 @@
+Resources:
+  AttachmentsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName : cantek-app-files
+      # Set the CORS policy
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
