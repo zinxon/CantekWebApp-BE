@@ -1,0 +1,20 @@
+[
+  {
+    "email": "device21@test.ca",
+    "passwordHash": "user21",
+    "role": "Hello",
+    "profileId": "1"
+  },
+  {
+    "email": "device22@test.ca",
+    "passwordHash": "user21",
+    "role": "Hello",
+    "profileId": "1"
+  },
+  {
+    "email": "device23@test.ca",
+    "passwordHash": "user22",
+    "role": "Hello",
+    "profileId": "1"
+  }
+]

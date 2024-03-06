@@ -1,6 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import request from 'supertest';
+
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
@@ -15,10 +17,27 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/notification (POST)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .post('/notification')
+      .send({
+        targetId: 'device1',
+        id: 'user1',
+        content: 'Hello',
+      })
+      .expect(201);
+  });
+
+  it('/notification (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/notification?id=dummy')
       .expect(200)
-      .expect('Hello World!');
+      .expect([]);
+  });
+
+  it('/notification (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/notification/dummyid')
+      .expect(404);
   });
 });

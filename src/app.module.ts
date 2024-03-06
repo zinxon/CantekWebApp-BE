@@ -1,10 +1,32 @@
+import { DynamooseModule } from 'nestjs-dynamoose';
+
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+
+import { NotificationModule } from './modules/notification/notification.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot(),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+      playground: true,
+    }),
+    DynamooseModule.forRoot({
+      local: process.env.IS_DDB_LOCAL === 'true',
+      aws: { region: process.env.REGION },
+      table: {
+        create: process.env.IS_DDB_LOCAL === 'true',
+        prefix: `${process.env.SERVICE}-${process.env.STAGE}-`,
+        suffix: '-table',
+      },
+    }),
+    NotificationModule,
+    UserModule
+  ],
 })
 export class AppModule {}
