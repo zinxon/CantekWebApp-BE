@@ -19,9 +19,4 @@ export class CreateUserInput {
   @IsString()
   @Field()
   role: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Field()
-  profileId: string;
 }

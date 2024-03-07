@@ -43,7 +43,7 @@ export class UserController {
   }
 
   @Get()
-  find(@Query() { email }: { email?: string;}) {
+  find(@Query() { email }: { email?: string }) {
     if (email) {
       return this.userService.findByEmail(email);
     }
@@ -51,7 +51,7 @@ export class UserController {
   }
 
   @Get()
-  findByStatus(@Query() { status }: { status?: string;}) {
+  findByStatus(@Query() { status }: { status?: string }) {
     if (status) {
       return this.userService.findByStatus(status);
     }

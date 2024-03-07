@@ -1,3 +1,5 @@
+import { IsString } from 'class-validator';
+
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { CreateUserInput } from './create-user.input';
@@ -14,6 +16,10 @@ export class User extends CreateUserInput {
 
   @Field(/* istanbul ignore next */ () => UserStatus)
   status: UserStatus;
+
+  @IsString()
+  @Field()
+  profileId: string;
 
   @Field()
   createAt: string;

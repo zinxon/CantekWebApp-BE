@@ -1,4 +1,4 @@
-import serverlessExpress from '@vendia/serverless-express';
+import serverlessExpress from '@codegenie/serverless-express';
 import { APIGatewayProxyHandler, Handler } from 'aws-lambda';
 import express from 'express';
 
