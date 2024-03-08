@@ -13,7 +13,7 @@ export class CreateUserInput {
   @IsNotEmpty()
   @IsString()
   @Field()
-  passwordHash: string;
+  password: string;
 
   @IsNotEmpty()
   @IsString()

@@ -18,15 +18,16 @@ export class UserService {
 
   async create(input: CreateUserInput) {
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(input.passwordHash, saltOrRounds);
+    const hash = await bcrypt.hash(input.password, saltOrRounds);
 
     return this.model.create({
       ...input,
       id: uuid.v4(),
-      passwordHash: hash,
+      password: hash,
       status: UserStatus.Active,
       profileId: '',
       createAt: new Date().toISOString(),
+      updateAt: new Date().toISOString(),
     });
   }
 

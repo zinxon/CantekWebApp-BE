@@ -12,7 +12,7 @@ export const UserSchema = new Schema({
       rangeKey: 'status',
     },
   },
-  passwordHash: {
+  password: {
     type: String,
   },
   role: {
@@ -25,6 +25,9 @@ export const UserSchema = new Schema({
     type: String,
   },
   createAt: {
+    type: String,
+  },
+  updateAt: {
     type: String,
   },
 });

@@ -23,4 +23,6 @@ export class User extends CreateUserInput {
 
   @Field()
   createAt: string;
+  @Field()
+  updateAt: string;
 }
