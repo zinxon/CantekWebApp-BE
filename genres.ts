@@ -1,5 +1,3 @@
-// import { pascalCase } from 'change-case';
-import * as changeCase from 'change-case';
 import * as dynamoose from 'dynamoose';
 import { Schema } from 'dynamoose/dist/Schema';
 import { TableOptionsOptional } from 'dynamoose/dist/Table';
@@ -36,7 +34,7 @@ async function main() {
       // use the filename without extention as tablename
       const fileNameExt = file.split(/[\\\/]/).pop()!;
       const fileName = fileNameExt.split('.').shift()!;
-      const tableName = changeCase.pascalCase(fileName);
+      const tableName = fileName.charAt(0).toUpperCase() + fileName.slice(1);
 
       // dynamic import the typescript file
       const exports = await import(`.${path.sep}${file}`);
