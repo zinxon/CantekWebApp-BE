@@ -63,11 +63,23 @@ Default output format [None]:
 $ npm run deploy
 ```
 
-## Install DynamoDB local
+## Install DynamoDB local & DynamoDB local admin GUI
 
 ```bash
 # download dynamodb local into .dynamodb folder
 $ npm run ddb:install
+```
+
+```bash
+# download DynamoDB local admin GUI - https://github.com/aaronshaf/dynamodb-admin
+npm install -g dynamodb-admin
+
+# For Windows:
+set DYNAMO_ENDPOINT=http://localhost:8000
+dynamodb-admin
+
+# For Mac/Linux:
+DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin
 ```
 
 ## Local Offline Development
