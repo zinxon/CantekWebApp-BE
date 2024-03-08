@@ -19,7 +19,7 @@ lerna-debug.log*
 /playground
 
 # IDEs and editors
-/.vscode
+# /.vscode
 /.idea
 .project
 .classpath
