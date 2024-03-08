@@ -1,4 +1,5 @@
-import * as bcrypt from 'bcrypt';
+// import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { InjectModel, Model } from 'nestjs-dynamoose';
 import * as uuid from 'uuid';
 
