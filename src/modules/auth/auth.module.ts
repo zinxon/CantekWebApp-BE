@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -19,6 +20,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '60s' },
     }),
+    CacheModule.register(),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
