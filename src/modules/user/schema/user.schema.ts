@@ -12,6 +12,9 @@ export const UserSchema = new Schema({
       rangeKey: 'status',
     },
   },
+  name: {
+    type: String,
+  },
   password: {
     type: String,
   },
@@ -24,10 +27,10 @@ export const UserSchema = new Schema({
   status: {
     type: String,
   },
-  createAt: {
+  createdAt: {
     type: String,
   },
-  updateAt: {
+  updatedAt: {
     type: String,
   },
 });

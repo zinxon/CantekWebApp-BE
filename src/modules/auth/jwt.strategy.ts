@@ -9,6 +9,7 @@ dotenv.config();
 type Payload = {
   sub: string;
   email: string;
+  name: string;
   role: string;
   profileId: string;
 };
@@ -26,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   private static extractJWTFromCookie(req: Request): string | null {
-    console.log(req.cookies);
+    console.log('hi', req.cookies);
     if (req.cookies && req.cookies.accessToken) {
       return req.cookies.accessToken;
     }

@@ -13,7 +13,7 @@ export class Admin {
   additionalAttributes: string;
 
   @Field()
-  createAt: string;
+  createdAt: string;
   @Field()
-  updateAt: string;
+  updatedAt: string;
 }

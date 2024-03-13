@@ -165,7 +165,7 @@ query {
     targetId
     userId
     content
-    createAt
+    createdAt
   }
 }
 ```
@@ -177,7 +177,7 @@ query {
     targetId
     userId
     content
-    createAt
+    createdAt
   }
 }
 ```
@@ -192,7 +192,7 @@ mutation {
     targetId
     userId
     content
-    createAt
+    createdAt
   }
 }
 ```

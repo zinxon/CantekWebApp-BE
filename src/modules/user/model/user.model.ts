@@ -22,7 +22,7 @@ export class User extends CreateUserInput {
   profileId: string;
 
   @Field()
-  createAt: string;
+  createdAt: string;
   @Field()
-  updateAt: string;
+  updatedAt: string;
 }

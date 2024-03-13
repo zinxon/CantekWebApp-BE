@@ -22,10 +22,10 @@ export const StudentSchema = new Schema({
     type: Array,
     schema: String,
   },
-  createAt: {
+  createdAt: {
     type: String,
   },
-  updateAt: {
+  updatedAt: {
     type: String,
   },
 });

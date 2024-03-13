@@ -1,19 +1,22 @@
 [
   {
     "email": "device21@test.ca",
+    "name":"Device 21",
     "password": "user21",
     "role": "Hello",
     "profileId": "1"
   },
   {
     "email": "device22@test.ca",
-    "password": "user21",
+    "name":"Device 22",
+    "password": "user22",
     "role": "Hello",
     "profileId": "1"
   },
   {
     "email": "device23@test.ca",
-    "password": "user22",
+    "name": "Device 23",
+    "password": "user23",
     "role": "Hello",
     "profileId": "1"
   }

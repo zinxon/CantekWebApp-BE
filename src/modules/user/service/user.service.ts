@@ -9,10 +9,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { AdminService } from '@modules/admin/service/admin.service';
-import { StudentService } from '@modules/student/service/student.service';
-import { TeacherService } from '@modules/teacher/service/teacher.service';
-
+import { AdminService } from '../../admin/service/admin.service';
+import { StudentService } from '../../student/service/student.service';
+import { TeacherService } from '../../teacher/service/teacher.service';
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
 import { UserRole, UserStatus } from '../model/user.enum';
@@ -55,8 +54,8 @@ export class UserService {
         password: await this.bcryptHash(input.password),
         status: UserStatus.Active,
         profileId: profileId,
-        createAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;

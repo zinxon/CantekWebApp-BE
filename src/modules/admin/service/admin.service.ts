@@ -19,8 +19,8 @@ export class AdminService {
       return this.model.create({
         id: uuid.v4(),
         additionalAttributes: '',
-        createAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;

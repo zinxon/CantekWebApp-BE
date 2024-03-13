@@ -21,8 +21,8 @@ export class StudentService {
         certificate: '',
         courseId: [''],
         techStack: [''],
-        createAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;
