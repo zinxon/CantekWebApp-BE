@@ -1,8 +1,13 @@
-import * as bcrypt from 'bcrypt';
+// import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { InjectModel, Model } from 'nestjs-dynamoose';
 import * as uuid from 'uuid';
 
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
@@ -16,23 +21,55 @@ export class UserService {
     private readonly model: Model<User, UserKey>,
   ) {}
 
-  async create(input: CreateUserInput) {
+  async bcryptHash(password: string) {
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(input.password, saltOrRounds);
-
-    return this.model.create({
-      ...input,
-      id: uuid.v4(),
-      password: hash,
-      status: UserStatus.Active,
-      profileId: '',
-      createAt: new Date().toISOString(),
-      updateAt: new Date().toISOString(),
-    });
+    return bcrypt.hash(password, saltOrRounds);
   }
 
-  update(key: UserKey, input: UpdateUserInput) {
-    return this.model.update(key, input);
+  async create(input: CreateUserInput) {
+    try {
+      const existedUser = await this.model
+        .query('email')
+        .eq(input.email)
+        .exec();
+      if (existedUser) {
+        throw new ConflictException('User already exists');
+      }
+      return this.model.create({
+        ...input,
+        id: uuid.v4(),
+        password: await this.bcryptHash(input.password),
+        status: UserStatus.Active,
+        profileId: '',
+        createAt: new Date().toISOString(),
+        updateAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(key: UserKey, input: UpdateUserInput) {
+    try {
+      const existedUser = await this.findOne(key);
+      if (!existedUser) {
+        throw new NotFoundException("User doesn't exists");
+      }
+      // change password
+      if (existedUser && input.password) {
+        const hash = await this.bcryptHash(input.password);
+        return this.model.update(key, {
+          password: hash,
+        });
+      }
+      // active/delete user
+      if (existedUser && input.status) {
+        return this.model.update(key, input);
+      }
+      return this.model.get(key);
+    } catch (error) {
+      throw error;
+    }
   }
 
   delete(key: UserKey) {

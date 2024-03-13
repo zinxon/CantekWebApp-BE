@@ -1,4 +1,5 @@
 service: CANTEK-WEPAPP-BE
+useDotenv: true
 
 provider:
   name: aws
@@ -9,8 +10,9 @@ provider:
     SERVICE: ${self:service}
     STAGE: ${self:provider.stage}
     REGION: ${self:provider.region}
-    NO_COLOR: ${env:NO_COLOR, 'true'}
-    IS_DDB_LOCAL: ${env:IS_DDB_LOCAL, 'false'}
+    NO_COLOR: ${env:NO_COLOR}
+    IS_DDB_LOCAL: ${env:IS_DDB_LOCAL}
+    JWT_SECRET: ${env:JWT_SECRET}
   apiGateway:
     shouldStartNameWithService: true
   iam:
@@ -26,21 +28,22 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource: arn:aws:dynamodb:${self:provider.region}:*:*
-        - Effect: Allow
-          Action:
-            - "s3:GetObject"
-            - "s3:PutObject"
-            - "s3:PutObjectAcl"
-            - "s3:DeleteObject"
-            - "s3:ListBucket"
-          Resource:
-            - "arn:aws:s3:::cantek-files/*"
+        # - Effect: Allow
+        #   Action:
+        #     - "s3:GetObject"
+        #     - "s3:PutObject"
+        #     - "s3:PutObjectAcl"
+        #     - "s3:DeleteObject"
+        #     - "s3:ListBucket"
+        # Resource:
+        #   - "arn:aws:s3:::cantek-files/*"
 
 plugins:
   - serverless-plugin-typescript
   - serverless-dynamodb
   - serverless-offline
-
+  - serverless-jetpack
+  - serverless-dotenv-plugin
 custom:
   serverless-dynamodb:
     stages:
@@ -62,4 +65,4 @@ functions:
 
 resources:
   - ${file(resource/dynamodb.yml)}
-  - ${file(resource/s3.yml)}
+  # - ${file(resource/s3.yml)}

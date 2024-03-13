@@ -54,6 +54,10 @@ Default region name [us-east-1]:
 Default output format [None]:
 ```
 
+```bash
+export AWS_PROFILE=cantek
+```
+
 > Please enter your **AWS Access Key ID**, **AWS Secret Access Key** and **Default region name**
 
 ## Deployment
