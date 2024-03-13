@@ -2,6 +2,8 @@ import { DynamooseModule } from 'nestjs-dynamoose';
 
 import { Module } from '@nestjs/common';
 
+import { StudentSchema } from '@modules/student/schema/student.schema';
+import { StudentService } from '@modules/student/service/student.service';
 import { TeacherSchema } from '@modules/teacher/schema/teacher.schema';
 import { TeacherService } from '@modules/teacher/service/teacher.service';
 
@@ -27,9 +29,19 @@ import { UserService } from './service/user.service';
         name: 'teacher',
         schema: TeacherSchema,
       },
+      {
+        name: 'student',
+        schema: StudentSchema,
+      },
     ]),
   ],
-  providers: [UserService, UserResolver, AdminService, TeacherService],
+  providers: [
+    UserService,
+    UserResolver,
+    AdminService,
+    TeacherService,
+    StudentService,
+  ],
   controllers: [UserController],
   exports: [UserService],
 })
