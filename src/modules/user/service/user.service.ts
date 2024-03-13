@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 
 import { AdminService } from '@modules/admin/service/admin.service';
+import { TeacherService } from '@modules/teacher/service/teacher.service';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
@@ -22,6 +23,7 @@ export class UserService {
     @InjectModel('user')
     private readonly model: Model<User, UserKey>,
     private readonly adminService: AdminService,
+    private readonly teacherService: TeacherService,
   ) {}
 
   async bcryptHash(password: string) {
@@ -40,6 +42,8 @@ export class UserService {
       }
       if (input.role === UserRole.Admin) {
         profileId = (await this.adminService.create()).id;
+      } else if (input.role === UserRole.Teacher) {
+        profileId = (await this.teacherService.create()).id;
       }
       return this.model.create({
         ...input,

@@ -9,6 +9,7 @@ import {
   AdminModule,
   AuthModule,
   NotificationModule,
+  TeacherModule,
   UserModule,
 } from './modules';
 
@@ -33,6 +34,7 @@ import {
     UserModule,
     AuthModule,
     AdminModule,
+    TeacherModule,
   ],
 })
 export class AppModule {}
