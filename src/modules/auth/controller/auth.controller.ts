@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import {
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 
 import { JwtAuthGuard } from '../jwt-auth.guard';
 import { LocalAuthGuard } from '../local-auth.guard';
@@ -14,6 +22,8 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(10) // Cache for 10 seconds
   @Get('profile')
   getProfile(@Request() req: any) {
     return req.user;

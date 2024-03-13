@@ -3,11 +3,17 @@ import * as bcrypt from 'bcryptjs';
 import { InjectModel, Model } from 'nestjs-dynamoose';
 import * as uuid from 'uuid';
 
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+
+import { AdminService } from '@modules/admin/service/admin.service';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
-import { UserStatus } from '../model/user.enum';
+import { UserRole, UserStatus } from '../model/user.enum';
 import { User, UserKey } from '../model/user.model';
 
 @Injectable()
@@ -15,25 +21,61 @@ export class UserService {
   constructor(
     @InjectModel('user')
     private readonly model: Model<User, UserKey>,
+    private readonly adminService: AdminService,
   ) {}
 
-  async create(input: CreateUserInput) {
+  async bcryptHash(password: string) {
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(input.password, saltOrRounds);
-
-    return this.model.create({
-      ...input,
-      id: uuid.v4(),
-      password: hash,
-      status: UserStatus.Active,
-      profileId: '',
-      createAt: new Date().toISOString(),
-      updateAt: new Date().toISOString(),
-    });
+    return bcrypt.hash(password, saltOrRounds);
   }
 
-  update(key: UserKey, input: UpdateUserInput) {
-    return this.model.update(key, input);
+  async create(input: CreateUserInput) {
+    let profileId: string = '';
+    try {
+      const existedUser = (
+        await this.model.query('email').eq(input.email).exec()
+      )[0];
+      if (existedUser) {
+        throw new ConflictException('User already exists');
+      }
+      if (input.role === UserRole.Admin) {
+        profileId = (await this.adminService.create()).id;
+      }
+      return this.model.create({
+        ...input,
+        id: uuid.v4(),
+        password: await this.bcryptHash(input.password),
+        status: UserStatus.Active,
+        profileId: profileId,
+        createAt: new Date().toISOString(),
+        updateAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(key: UserKey, input: UpdateUserInput) {
+    try {
+      const existedUser = await this.findOne(key);
+      if (!existedUser) {
+        throw new NotFoundException("User doesn't exists");
+      }
+      // change password
+      if (existedUser && input.password) {
+        const hash = await this.bcryptHash(input.password);
+        return this.model.update(key, {
+          password: hash,
+        });
+      }
+      // active/delete user
+      if (existedUser && input.status) {
+        return this.model.update(key, input);
+      }
+      return this.model.get(key);
+    } catch (error) {
+      throw error;
+    }
   }
 
   delete(key: UserKey) {
