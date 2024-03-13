@@ -9,9 +9,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import { AdminService } from '@modules/admin/service/admin.service';
+import { TeacherService } from '@modules/teacher/service/teacher.service';
+
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
-import { UserStatus } from '../model/user.enum';
+import { UserRole, UserStatus } from '../model/user.enum';
 import { User, UserKey } from '../model/user.model';
 
 @Injectable()
@@ -19,6 +22,8 @@ export class UserService {
   constructor(
     @InjectModel('user')
     private readonly model: Model<User, UserKey>,
+    private readonly adminService: AdminService,
+    private readonly teacherService: TeacherService,
   ) {}
 
   async bcryptHash(password: string) {
@@ -27,20 +32,25 @@ export class UserService {
   }
 
   async create(input: CreateUserInput) {
+    let profileId: string = '';
     try {
-      const existedUser = await this.model
-        .query('email')
-        .eq(input.email)
-        .exec();
+      const existedUser = (
+        await this.model.query('email').eq(input.email).exec()
+      )[0];
       if (existedUser) {
         throw new ConflictException('User already exists');
+      }
+      if (input.role === UserRole.Admin) {
+        profileId = (await this.adminService.create()).id;
+      } else if (input.role === UserRole.Teacher) {
+        profileId = (await this.teacherService.create()).id;
       }
       return this.model.create({
         ...input,
         id: uuid.v4(),
         password: await this.bcryptHash(input.password),
         status: UserStatus.Active,
-        profileId: '',
+        profileId: profileId,
         createAt: new Date().toISOString(),
         updateAt: new Date().toISOString(),
       });
