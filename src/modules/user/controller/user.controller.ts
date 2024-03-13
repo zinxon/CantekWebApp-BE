@@ -23,6 +23,11 @@ export class UserController {
     return this.userService.create(body);
   }
 
+  // @Post("/admin")
+  // create(@Body() body: CreateUserInput) {
+  //   return this.userService.create(body);
+  // }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateUserInput) {
     return this.userService.update({ id }, body);

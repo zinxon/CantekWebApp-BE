@@ -13,6 +13,11 @@ export class CreateUserInput {
   @IsNotEmpty()
   @IsString()
   @Field()
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Field()
   password: string;
 
   @IsNotEmpty()
