@@ -40,11 +40,11 @@ export class UserController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const noti = await this.userService.findOne({ id });
-    if (!noti) {
+    const user = await this.userService.findOne({ id });
+    if (!user) {
       throw new NotFoundException();
     }
-    return noti;
+    return user;
   }
 
   @Get()

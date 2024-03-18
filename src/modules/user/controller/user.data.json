@@ -1,20 +1,23 @@
 [
   {
+    "id":1,
     "email": "device21@test.ca",
+    "name":"Device 21",
     "password": "user21",
-    "role": "Hello",
-    "profileId": "1"
+    "role": "admin"
   },
   {
+    "id":2,
     "email": "device22@test.ca",
-    "password": "user21",
-    "role": "Hello",
-    "profileId": "1"
+    "name":"Device 22",
+    "password": "user22",
+    "role": "teacher"
   },
   {
+    "id":3,
     "email": "device23@test.ca",
-    "password": "user22",
-    "role": "Hello",
-    "profileId": "1"
+    "name": "Device 23",
+    "password": "user23",
+    "role": "student"
   }
 ]

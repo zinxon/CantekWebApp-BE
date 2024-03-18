@@ -5,6 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 
 import { UserSchema } from '../schema/user.schema';
+import { AdminSchema } from './../../admin/schema/admin.schema';
+import { StudentSchema } from './../../student/schema/student.schema';
+import { TeacherSchema } from './../../teacher/schema/teacher.schema';
 
 export const UserTestImports = [
   ConfigModule.forRoot(),
@@ -23,8 +26,20 @@ export const UserTestImports = [
   }),
   DynamooseModule.forFeature([
     {
-      name: 'notification',
+      name: 'user',
       schema: UserSchema,
+    },
+    {
+      name: 'admin',
+      schema: AdminSchema,
+    },
+    {
+      name: 'teacher',
+      schema: TeacherSchema,
+    },
+    {
+      name: 'student',
+      schema: StudentSchema,
     },
   ]),
 ];

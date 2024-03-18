@@ -23,7 +23,7 @@ export class AuthController {
     res
       .cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'lax',
         expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
       })

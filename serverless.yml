@@ -9,7 +9,7 @@ provider:
   environment:
     SERVICE: ${self:service}
     STAGE: ${self:provider.stage}
-    REGION: ${self:provider.region}
+    REGION: ${self:provider.region,'us-east-2'}
     NO_COLOR: ${env:NO_COLOR}
     IS_DDB_LOCAL: ${env:IS_DDB_LOCAL,'false'}
     JWT_SECRET: ${env:JWT_SECRET}
