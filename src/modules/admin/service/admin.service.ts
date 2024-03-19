@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 
 import { Admin, AdminKey } from '../model/admin.model';
+import { UpdateAdminInput } from '../model/update-admin.input';
 
 // import { CreateAdminInput } from '../model/create-admin.input';
 
@@ -19,8 +20,8 @@ export class AdminService {
       return this.model.create({
         id: uuid.v4(),
         additionalAttributes: '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        // createdAt: new Date().toISOString(),
+        // updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;
@@ -31,13 +32,15 @@ export class AdminService {
     return `This action returns all admin`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
+  findOne(key: AdminKey) {
+    return this.model.get(key);
   }
 
-  // update(id: number, updateAdminDto: UpdateAdminDto) {
-  //   return `This action updates a #${id} admin`;
-  // }
+  async update(key: AdminKey, updateAdminInput: UpdateAdminInput) {
+    console.log(`This action updates a #${key} admin`);
+    const res = await this.model.update(key, updateAdminInput);
+    return res;
+  }
 
   remove(id: number) {
     return `This action removes a #${id} admin`;

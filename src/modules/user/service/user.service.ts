@@ -125,7 +125,7 @@ export class UserService {
   }
 
   findByEmail(email: string) {
-    console.log(this.model.query('email').eq(email).exec());
+    // console.log(this.model.query('email').eq(email).exec());
     return this.model.query('email').eq(email).exec();
   }
 

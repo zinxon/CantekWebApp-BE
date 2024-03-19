@@ -12,8 +12,8 @@ export class Admin {
   @Field({ nullable: true })
   additionalAttributes: string;
 
-  @Field()
-  createdAt: string;
-  @Field()
-  updatedAt: string;
+  // @Field()
+  // createdAt: string;
+  // @Field()
+  // updatedAt: string;
 }

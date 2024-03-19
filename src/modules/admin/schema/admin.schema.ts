@@ -1,20 +1,46 @@
 import { Schema } from 'dynamoose';
 
-export const AdminSchema = new Schema({
-  id: {
-    type: String,
-    hashKey: true,
+export const AdminSchema = new Schema(
+  {
+    id: {
+      type: String,
+      hashKey: true,
+    },
+    name: {
+      type: String,
+    },
+    additionalAttributes: {
+      type: String,
+    },
+    // createdAt: {
+    //   type: String,
+    // },
+    // updatedAt: {
+    //   type: String,
+    // },
   },
-  name: {
-    type: String,
+  {
+    timestamps: {
+      createdAt: {
+        createdAt: {
+          type: {
+            value: Date,
+            settings: {
+              storage: 'iso',
+            },
+          },
+        },
+      },
+      updatedAt: {
+        updatedAt: {
+          type: {
+            value: Date,
+            settings: {
+              storage: 'iso',
+            },
+          },
+        },
+      },
+    },
   },
-  additionalAttributes: {
-    type: String,
-  },
-  createdAt: {
-    type: String,
-  },
-  updatedAt: {
-    type: String,
-  },
-});
+);
