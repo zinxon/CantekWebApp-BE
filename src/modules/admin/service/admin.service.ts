@@ -29,20 +29,20 @@ export class AdminService {
   }
 
   findAll() {
-    return `This action returns all admin`;
+    return this.model.scan().exec();
   }
 
   findOne(key: AdminKey) {
     return this.model.get(key);
   }
 
-  async update(key: AdminKey, updateAdminInput: UpdateAdminInput) {
+  update(key: AdminKey, updateAdminInput: UpdateAdminInput) {
     console.log(`This action updates a #${key} admin`);
-    const res = await this.model.update(key, updateAdminInput);
-    return res;
+    return this.model.update(key, updateAdminInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
+  remove(key: AdminKey) {
+    this.model.delete(key);
+    return { status: 'ok' };
   }
 }
