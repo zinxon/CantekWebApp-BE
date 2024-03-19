@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Param, Post, Put} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Put} from "@nestjs/common";
 import {AnnouncementService} from "@modules/announcement/service/announcement.service";
 import {CreateAnnouncementDto} from "../model/create-announcement.input";
 import {AnnouncementKey} from "@modules/announcement/model/create-announcement.input";
@@ -22,5 +22,10 @@ export class AnnouncementController {
     async delete(@Param('id') id: string) {
         const key: AnnouncementKey = {id};
         return this.announcementService.delete(key);
+    }
+
+    @Get("all")
+    async findAll() {
+        return this.announcementService.findAll();
     }
 }

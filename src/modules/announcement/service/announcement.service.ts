@@ -25,4 +25,8 @@ export class AnnouncementService {
   async delete(key: AnnouncementKey) {
     return this.model.delete(key);
   }
+
+  async findAll() {
+    return this.model.scan().exec();
+  }
 }
