@@ -7,13 +7,14 @@ import {
   Param,
   Patch,
   Post,
-  Query,
-  Req,
-  UnauthorizedException,
+  Query, // Req,
+  // UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from '@modules/auth/jwt-auth.guard';
+import { RoleGuard } from '@modules/auth/role.guard';
+import { Roles } from '@modules/auth/roles.decorator';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
@@ -43,17 +44,18 @@ export class UserController {
     return this.userService.delete({ id });
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get()
   async findAllUser(
-    @Req() req: any,
+    // @Req() req: any,
     @Query()
     { role, email, status }: { role?: string; email?: string; status?: string },
   ) {
     try {
-      if (req.user.role !== 'admin') {
-        throw new UnauthorizedException('Insufficient Permission');
-      }
+      // if (req.user.role !== 'admin') {
+      //   throw new UnauthorizedException('Insufficient Permission');
+      // }
       return this.userService.findAllUser(role, email, status);
     } catch (error) {
       throw error;
