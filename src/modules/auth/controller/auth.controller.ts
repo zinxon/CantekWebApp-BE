@@ -36,7 +36,6 @@ export class AuthController {
   // @CacheTTL(10) // Cache for 10 seconds
   @Get('profile')
   getProfile(@Request() req: any) {
-    console.log('in req', req);
     return req.user;
   }
 }

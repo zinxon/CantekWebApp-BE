@@ -30,7 +30,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if ((req.cookies && req.cookies.accessToken) || req.headers.cookie) {
       const accessToken =
         req.cookies?.accessToken || req.headers.cookie?.split('=')[1] || null;
-      console.log(accessToken);
       return accessToken;
     }
     return null;

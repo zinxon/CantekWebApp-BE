@@ -81,6 +81,8 @@ Resources:
           AttributeType: S
         - AttributeName: email
           AttributeType: S
+        - AttributeName: role
+          AttributeType: S
         - AttributeName: status
           AttributeType: S
       KeySchema:
@@ -93,5 +95,11 @@ Resources:
               KeyType: HASH
             - AttributeName: status
               KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: roleGlobalIndex
+          KeySchema:
+            - AttributeName: role
+              KeyType: HASH
           Projection:
             ProjectionType: ALL
