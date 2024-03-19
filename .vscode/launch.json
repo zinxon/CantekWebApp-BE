@@ -17,6 +17,42 @@
         "sourceMaps": true,
         "stopOnEntry": false,
         "console": "integratedTerminal",
-      }
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Serverless Offline Debug",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "sls:debug"],
+        "sourceMaps": true,
+        "autoAttachChildProcesses": true,
+        "stopOnEntry": false,
+        "restart": true,
+        "console": "integratedTerminal"
+    } ,
+    //   {
+    //     "type": "node",
+    //     "request": "launch",
+    //     "name": "Launch Serverless Offline",
+    //     "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
+    //     "args": ["offline", "start", "--httpPort", "3000", "--noTimeout"],
+    //     "runtimeArgs": ["--lazy"],
+    //     "outFiles": ["${workspaceRoot}/.webpack/**/*.js"],
+    //     "protocol": "inspector",
+    //     "runtimeExecutable": "node",
+    //     "env": {
+    //       "SERVICE": "CANTEK-WEPAPP-BE",
+    //       "STAGE": "dev",
+    //       "REGION": "us-east-2",
+    //       "NO_COLOR": "true",
+    //       "IS_DDB_LOCAL": "true",
+    //       "JWT_SECRET": "cantek",
+    //     },
+    //     "sourceMaps": true,
+    //     "autoAttachChildProcesses": true,
+    //     "stopOnEntry": false,
+    //     "restart": true,
+    //     "console": "integratedTerminal"
+    // } 
     ]
 }

@@ -21,8 +21,8 @@ export class User extends CreateUserInput {
   @Field()
   profileId: string;
 
-  @Field()
-  createAt: string;
-  @Field()
-  updateAt: string;
+  // @Field()
+  // createdAt: string;
+  // @Field()
+  // updatedAt: string;
 }

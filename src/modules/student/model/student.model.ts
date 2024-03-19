@@ -21,7 +21,7 @@ export class Student {
   techStack: string[];
 
   @Field()
-  createAt: string;
+  createdAt: string;
   @Field()
-  updateAt: string;
+  updatedAt: string;
 }

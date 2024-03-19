@@ -7,8 +7,14 @@ import {
   Param,
   Patch,
   Post,
-  Query,
+  Query, // Req,
+  // UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
+
+import { JwtAuthGuard } from '@modules/auth/jwt-auth.guard';
+import { RoleGuard } from '@modules/auth/role.guard';
+import { Roles } from '@modules/auth/roles.decorator';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
@@ -38,22 +44,40 @@ export class UserController {
     return this.userService.delete({ id });
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const noti = await this.userService.findOne({ id });
-    if (!noti) {
-      throw new NotFoundException();
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Get()
+  async findAllUser(
+    // @Req() req: any,
+    @Query()
+    { role, email, status }: { role?: string; email?: string; status?: string },
+  ) {
+    try {
+      // if (req.user.role !== 'admin') {
+      //   throw new UnauthorizedException('Insufficient Permission');
+      // }
+      return this.userService.findAllUser(role, email, status);
+    } catch (error) {
+      throw error;
     }
-    return noti;
   }
 
-  @Get()
-  find(@Query() { email }: { email?: string }) {
-    if (email) {
-      return this.userService.findByEmail(email);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const user = await this.userService.findOne({ id });
+    if (!user) {
+      throw new NotFoundException();
     }
-    throw new BadRequestException();
+    return user;
   }
+
+  // @Get()
+  // find(@Query() { email }: { email?: string }) {
+  //   if (email) {
+  //     return this.userService.findByEmail(email);
+  //   }
+  //   throw new BadRequestException();
+  // }
 
   @Get()
   findByStatus(@Query() { status }: { status?: string }) {

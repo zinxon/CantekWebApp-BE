@@ -18,8 +18,8 @@ export class TeacherService {
         id: uuid.v4(),
         courseId: [''],
         additionalAttributes: '',
-        createAt: new Date().toISOString(),
-        updateAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;

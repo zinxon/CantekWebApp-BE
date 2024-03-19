@@ -1,5 +1,15 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
+import { UpdateAdminInput } from '../model/update-admin.input';
 // import { CreateAdminInput } from '../model/create-admin.input';
 import { AdminService } from '../service/admin.service';
 
@@ -18,14 +28,18 @@ export class AdminController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.adminService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const admin = await this.adminService.findOne({ id });
+    if (!admin) {
+      throw new NotFoundException();
+    }
+    return admin;
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAdminDto: UpdateAdminDto) {
-  //   return this.adminService.update(+id, updateAdminDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateAdminInput: UpdateAdminInput) {
+    return this.adminService.update({ id }, updateAdminInput);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

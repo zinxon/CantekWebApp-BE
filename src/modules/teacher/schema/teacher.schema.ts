@@ -12,10 +12,10 @@ export const TeacherSchema = new Schema({
   additionalAttributes: {
     type: String,
   },
-  createAt: {
+  createdAt: {
     type: String,
   },
-  updateAt: {
+  updatedAt: {
     type: String,
   },
 });

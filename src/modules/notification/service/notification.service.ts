@@ -20,7 +20,7 @@ export class NotificationService {
       ...input,
       id: uuid.v4(),
       status: NotificationStatus.Active,
-      createAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     });
   }
 

@@ -16,5 +16,5 @@ export class Notification extends CreateNotificationInput {
   status: NotificationStatus;
 
   @Field()
-  createAt: string;
+  createdAt: string;
 }

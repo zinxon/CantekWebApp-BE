@@ -2,11 +2,11 @@ import { Item } from 'nestjs-dynamoose';
 
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { User } from '../model/user.model';
 import { UserService } from '../service/user.service';
 import { UserTestImports } from '../test/user-test.imports';
 import userJson from './user.data.json';
 import { UserResolver } from './user.resolver';
-import { User } from '../model/user.model';
 
 let resolver: UserResolver;
 
@@ -25,19 +25,14 @@ describe('User Resolver', () => {
   beforeAll(async () => {
     // create user records
     users = await Promise.all(
-      userJson.map(
-        async (input) => (await resolver.createUser(input)) as any,
-      ),
+      userJson.map(async (input) => (await resolver.createUser(input)) as any),
     );
   });
 
   afterAll(async () => {
     // create user records
     await Promise.all(
-      users.map(
-        async (user) =>
-          await resolver.deleteUser(user.toJSON().id),
-      ),
+      users.map(async (user) => await resolver.deleteUser(user.toJSON().id)),
     );
   });
 

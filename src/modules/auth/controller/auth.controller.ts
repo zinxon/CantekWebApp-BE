@@ -1,4 +1,4 @@
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+// import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 import {
   Controller,
   Get,
@@ -6,8 +6,7 @@ import {
   Req,
   Request,
   Res,
-  UseGuards,
-  UseInterceptors,
+  UseGuards, // UseInterceptors,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from '../jwt-auth.guard';
@@ -24,7 +23,7 @@ export class AuthController {
     res
       .cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: 'lax',
         expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
       })
@@ -33,11 +32,10 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(CacheInterceptor)
-  @CacheTTL(10) // Cache for 10 seconds
+  // @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(10) // Cache for 10 seconds
   @Get('profile')
   getProfile(@Request() req: any) {
-    console.log(req);
     return req.user;
   }
 }
