@@ -17,11 +17,11 @@ export const StudentSchema = new Schema(
     },
     courseId: {
       type: Array,
-      schema: String,
+      schema: [String],
     },
     techStack: {
       type: Array,
-      schema: String,
+      schema: [String],
     },
     // createdAt: {
     //   type: String,

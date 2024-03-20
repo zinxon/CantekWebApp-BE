@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 
 import { JwtAuthGuard } from '@modules/auth/jwt-auth.guard';
 import { RoleGuard } from '@modules/auth/role.guard';
@@ -25,5 +34,12 @@ export class StudentController {
     } catch (error) {
       throw error;
     }
+  }
+
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body: UpdateStudentInput) {
+    return this.studentService.update({ id }, body);
   }
 }

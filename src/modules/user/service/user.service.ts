@@ -103,14 +103,6 @@ export class UserService {
         return this.model.query('status').eq(UserStatus.Active).exec();
       }
       return this.model.scan().exec(); // return all user in db
-      // return this.model.query('role').eq(UserRole.Admin).exec(); // return all admin in db
-      // return this.model.query('role').eq(UserRole.Teacher).exec(); // return all teacher in db
-      // return this.model.query('role').eq(UserRole.Student).exec(); // return all student in db
-      // return this.model.query('status').eq(UserStatus.Active).exec(); // return all active user in db
-      // return this.model.query('status').eq(UserStatus.Inactive).exec(); // return all inactive user in db
-      // return this.model.query('status').eq(UserStatus.Pending).exec(); // return all pending user in db
-      // return this.model.query('status').eq(UserStatus.Deleted).exec(); // return all deleted user in db
-      // return this.model.query('status').eq(UserStatus.Suspended).exec(); // return all suspended user in db
     } catch (error) {
       throw error;
     }

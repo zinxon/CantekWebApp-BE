@@ -55,15 +55,16 @@ export class StudentService {
     return this.model.scan().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
+  findOne(key: StudentKey) {
+    return this.model.get(key);
   }
 
-  // update(id: number, updateAdminDto: UpdateAdminDto) {
-  //   return `This action updates a #${id} admin`;
-  // }
+  async update(key: StudentKey, input: UpdateStudentInput) {
+    const res = await this.model.update(key, input);
+    return res;
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
+  delete(key: StudentKey) {
+    return this.model.delete(key);
   }
 }
