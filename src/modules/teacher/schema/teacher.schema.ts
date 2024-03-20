@@ -1,21 +1,47 @@
 import { Schema } from 'dynamoose';
 
-export const TeacherSchema = new Schema({
-  id: {
-    type: String,
-    hashKey: true,
+export const TeacherSchema = new Schema(
+  {
+    id: {
+      type: String,
+      hashKey: true,
+    },
+    courseId: {
+      type: Array,
+      schema: [String],
+    },
+    additionalAttributes: {
+      type: String,
+    },
+    // createdAt: {
+    //   type: String,
+    // },
+    // updatedAt: {
+    //   type: String,
+    // },
   },
-  courseId: {
-    type: Array,
-    schema: String,
+  {
+    timestamps: {
+      createdAt: {
+        createdAt: {
+          type: {
+            value: Date,
+            settings: {
+              storage: 'iso',
+            },
+          },
+        },
+      },
+      updatedAt: {
+        updatedAt: {
+          type: {
+            value: Date,
+            settings: {
+              storage: 'iso',
+            },
+          },
+        },
+      },
+    },
   },
-  additionalAttributes: {
-    type: String,
-  },
-  createdAt: {
-    type: String,
-  },
-  updatedAt: {
-    type: String,
-  },
-});
+);

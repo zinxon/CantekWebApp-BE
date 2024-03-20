@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 
 import { Teacher, TeacherKey } from '../model/teacher.model';
+import { UpdateTeacherInput } from '../model/update-teacher.input';
 
 @Injectable()
 export class TeacherService {
@@ -18,27 +19,37 @@ export class TeacherService {
         id: uuid.v4(),
         courseId: [''],
         additionalAttributes: '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        // createdAt: new Date().toISOString(),
+        // updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;
     }
   }
 
-  findAll() {
-    return `This action returns all admin`;
+  findAll(filter: UpdateTeacherInput) {
+    console.log(filter);
+    if (filter.courseId) {
+      this.model.query('courseId').eq(filter.courseId).exec();
+    }
+    if (filter.additionalAttributes) {
+      this.model
+        .query('additionalAttributes')
+        .eq(filter.additionalAttributes)
+        .exec();
+    }
+    return this.model.scan().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
+  findOne(key: TeacherKey) {
+    return this.model.get(key);
   }
 
-  // update(id: number, updateAdminDto: UpdateAdminDto) {
-  //   return `This action updates a #${id} admin`;
-  // }
+  async update(key: TeacherKey, input: UpdateTeacherInput) {
+    return this.model.update(key, input);
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
+  delete(key: TeacherKey) {
+    return this.model.delete(key);
   }
 }

@@ -7,7 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+
+import { JwtAuthGuard } from '@modules/auth/jwt-auth.guard';
+import { RoleGuard } from '@modules/auth/role.guard';
+import { Roles } from '@modules/auth/roles.decorator';
 
 import { UpdateAdminInput } from '../model/update-admin.input';
 // import { CreateAdminInput } from '../model/create-admin.input';
@@ -23,8 +28,8 @@ export class AdminController {
   }
 
   @Get()
-  findAll() {
-    return this.adminService.findAll();
+  async findAll() {
+    return await this.adminService.findAll();
   }
 
   @Get(':id')
@@ -36,13 +41,25 @@ export class AdminController {
     return admin;
   }
 
+  @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdminInput: UpdateAdminInput) {
-    return this.adminService.update({ id }, updateAdminInput);
+  async update(
+    @Param('id') id: string,
+    @Body() updateAdminInput: UpdateAdminInput,
+  ) {
+    const updatedAdmin = await this.adminService.update(
+      { id },
+      updateAdminInput,
+    );
+    if (!updatedAdmin) {
+      throw new NotFoundException('Admin not found');
+    }
+    return updatedAdmin;
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.adminService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.adminService.remove({ id });
   }
 }

@@ -1,10 +1,10 @@
+import { IsString } from 'class-validator';
+
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateAdminInput {
-  @Field({ nullable: true })
-  name: string;
-
+  @IsString()
   @Field({ nullable: true })
   additionalAttributes: string;
 }

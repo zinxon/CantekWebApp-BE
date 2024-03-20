@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 
 import { Student, StudentKey } from '../model/student.model';
+import { UpdateStudentInput } from '../model/update-student.input';
 
 @Injectable()
 export class StudentService {
@@ -21,27 +22,49 @@ export class StudentService {
         certificate: '',
         courseId: [''],
         techStack: [''],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        // createdAt: new Date().toISOString(),
+        // updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;
     }
   }
 
-  findAll() {
-    return `This action returns all admin`;
+  async findAllStudent(filter: UpdateStudentInput) {
+    // Apply filters based on provided criteria
+    if (filter.linkedin) {
+      this.model.query('linkedin').eq(filter.linkedin).exec();
+    }
+
+    if (filter.resume) {
+      this.model.query('resume').eq(filter.resume).exec();
+    }
+
+    if (filter.certificate) {
+      this.model.query('certificate').eq(filter.certificate).exec();
+    }
+
+    if (filter.courseId && filter.courseId.length > 0) {
+      this.model.query('courseId').eq(filter.courseId).exec();
+    }
+
+    if (filter.techStack && filter.techStack.length > 0) {
+      this.model.query('techStack').eq(filter.techStack).exec();
+    }
+
+    return this.model.scan().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} admin`;
+  findOne(key: StudentKey) {
+    return this.model.get(key);
   }
 
-  // update(id: number, updateAdminDto: UpdateAdminDto) {
-  //   return `This action updates a #${id} admin`;
-  // }
+  async update(key: StudentKey, input: UpdateStudentInput) {
+    const res = await this.model.update(key, input);
+    return res;
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} admin`;
+  delete(key: StudentKey) {
+    return this.model.delete(key);
   }
 }

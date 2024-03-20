@@ -56,7 +56,7 @@ export class UserController {
       // if (req.user.role !== 'admin') {
       //   throw new UnauthorizedException('Insufficient Permission');
       // }
-      return this.userService.findAllUser(role, email, status);
+      return await this.userService.findAllUser(role, email, status);
     } catch (error) {
       throw error;
     }

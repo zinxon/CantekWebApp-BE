@@ -6,12 +6,13 @@ export const AdminSchema = new Schema(
       type: String,
       hashKey: true,
     },
-    name: {
-      type: String,
-    },
     additionalAttributes: {
       type: String,
     },
+    // name: {
+    //   type: String,
+    // },
+
     // createdAt: {
     //   type: String,
     // },

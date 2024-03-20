@@ -88,29 +88,21 @@ export class UserService {
   async findAllUser(role?: string, email?: string, status?: string) {
     try {
       if (role === UserRole.Admin) {
-        return await this.model.query('role').eq(UserRole.Admin).exec();
+        return this.model.query('role').eq(UserRole.Admin).exec();
       }
       if (role === UserRole.Teacher) {
-        return await this.model.query('role').eq(UserRole.Teacher).exec();
+        return this.model.query('role').eq(UserRole.Teacher).exec();
       }
       if (role === UserRole.Student) {
-        return await this.model.query('role').eq(UserRole.Student).exec();
+        return this.model.query('role').eq(UserRole.Student).exec();
       }
       if (email) {
-        return await this.model.query('email').eq(email).exec();
+        return this.model.query('email').eq(email).exec();
       }
       if (status === UserStatus.Active) {
-        return await this.model.query('status').eq(UserStatus.Active).exec();
+        return this.model.query('status').eq(UserStatus.Active).exec();
       }
-      return await this.model.scan().exec(); // return all user in db
-      // return this.model.query('role').eq(UserRole.Admin).exec(); // return all admin in db
-      // return this.model.query('role').eq(UserRole.Teacher).exec(); // return all teacher in db
-      // return this.model.query('role').eq(UserRole.Student).exec(); // return all student in db
-      // return this.model.query('status').eq(UserStatus.Active).exec(); // return all active user in db
-      // return this.model.query('status').eq(UserStatus.Inactive).exec(); // return all inactive user in db
-      // return this.model.query('status').eq(UserStatus.Pending).exec(); // return all pending user in db
-      // return this.model.query('status').eq(UserStatus.Deleted).exec(); // return all deleted user in db
-      // return this.model.query('status').eq(UserStatus.Suspended).exec(); // return all suspended user in db
+      return this.model.scan().exec(); // return all user in db
     } catch (error) {
       throw error;
     }

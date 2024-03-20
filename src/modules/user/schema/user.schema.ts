@@ -6,6 +6,7 @@ export const UserSchema = new Schema(
       type: String,
       hashKey: true,
     },
+
     email: {
       type: String,
       index: {
