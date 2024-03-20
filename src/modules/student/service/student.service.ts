@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 
 import { Student, StudentKey } from '../model/student.model';
+import { UpdateStudentInput } from '../model/update-student.input';
 
 @Injectable()
 export class StudentService {
@@ -21,16 +22,37 @@ export class StudentService {
         certificate: '',
         courseId: [''],
         techStack: [''],
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        // createdAt: new Date().toISOString(),
+        // updatedAt: new Date().toISOString(),
       });
     } catch (error) {
       throw error;
     }
   }
 
-  findAll() {
-    return `This action returns all admin`;
+  async findAllStudent(filter: UpdateStudentInput) {
+    // Apply filters based on provided criteria
+    if (filter.linkedin) {
+      this.model.query('linkedin').eq(filter.linkedin).exec();
+    }
+
+    if (filter.resume) {
+      this.model.query('resume').eq(filter.resume).exec();
+    }
+
+    if (filter.certificate) {
+      this.model.query('certificate').eq(filter.certificate).exec();
+    }
+
+    if (filter.courseId && filter.courseId.length > 0) {
+      this.model.query('courseId').eq(filter.courseId).exec();
+    }
+
+    if (filter.techStack && filter.techStack.length > 0) {
+      this.model.query('techStack').eq(filter.techStack).exec();
+    }
+
+    return this.model.scan().exec();
   }
 
   findOne(id: number) {

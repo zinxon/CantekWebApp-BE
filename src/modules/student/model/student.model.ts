@@ -10,18 +10,18 @@ export class Student {
   id: string;
 
   @Field({ nullable: true })
-  linkedin: string;
+  linkedin?: string;
   @Field({ nullable: true })
-  resume: string;
+  resume?: string;
   @Field({ nullable: true })
-  certificate: string;
-  @Field({ nullable: true })
-  courseId: string[];
-  @Field({ nullable: true })
-  techStack: string[];
+  certificate?: string;
+  @Field(() => [String], { nullable: true })
+  courseId?: string[];
+  @Field(() => [String], { nullable: true })
+  techStack?: string[];
 
-  @Field()
-  createdAt: string;
-  @Field()
-  updatedAt: string;
+  // @Field()
+  // createdAt: string;
+  // @Field()
+  // updatedAt: string;
 }
