@@ -18,6 +18,7 @@ import { Roles } from '@modules/auth/roles.decorator';
 
 import { CreateUserInput } from '../model/create-user.input';
 import { UpdateUserInput } from '../model/update-user.input';
+import { UserRole } from '../model/user.enum';
 import { UserService } from '../service/user.service';
 
 @Controller('user')
@@ -29,11 +30,6 @@ export class UserController {
     return this.userService.create(body);
   }
 
-  // @Post("/admin")
-  // create(@Body() body: CreateUserInput) {
-  //   return this.userService.create(body);
-  // }
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: UpdateUserInput) {
     return this.userService.update({ id }, body);
@@ -44,18 +40,14 @@ export class UserController {
     return this.userService.delete({ id });
   }
 
-  @Roles('admin')
+  @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Get()
   async findAllUser(
-    // @Req() req: any,
     @Query()
     { role, email, status }: { role?: string; email?: string; status?: string },
   ) {
     try {
-      // if (req.user.role !== 'admin') {
-      //   throw new UnauthorizedException('Insufficient Permission');
-      // }
       return await this.userService.findAllUser(role, email, status);
     } catch (error) {
       throw error;
@@ -70,14 +62,6 @@ export class UserController {
     }
     return user;
   }
-
-  // @Get()
-  // find(@Query() { email }: { email?: string }) {
-  //   if (email) {
-  //     return this.userService.findByEmail(email);
-  //   }
-  //   throw new BadRequestException();
-  // }
 
   @Get()
   findByStatus(@Query() { status }: { status?: string }) {

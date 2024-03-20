@@ -13,6 +13,7 @@ import {
 import { JwtAuthGuard } from '@modules/auth/jwt-auth.guard';
 import { RoleGuard } from '@modules/auth/role.guard';
 import { Roles } from '@modules/auth/roles.decorator';
+import { UserRole } from '@modules/user/model/user.enum';
 
 import { UpdateAdminInput } from '../model/update-admin.input';
 // import { CreateAdminInput } from '../model/create-admin.input';
@@ -27,11 +28,15 @@ export class AdminController {
     return this.adminService.create();
   }
 
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get()
   async findAll() {
     return await this.adminService.findAll();
   }
 
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const admin = await this.adminService.findOne({ id });
@@ -41,7 +46,7 @@ export class AdminController {
     return admin;
   }
 
-  @Roles('admin')
+  @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Patch(':id')
   async update(
@@ -58,6 +63,7 @@ export class AdminController {
     return updatedAdmin;
   }
 
+  @Roles(UserRole.Admin)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.adminService.remove({ id });
