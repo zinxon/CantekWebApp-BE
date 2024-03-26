@@ -45,10 +45,28 @@ export class UserController {
   @Get()
   async findAllUser(
     @Query()
-    { role, email, status }: { role?: string; email?: string; status?: string },
+    {
+      limit,
+      page,
+      role,
+      email,
+      status,
+    }: {
+      limit?: number;
+      page?: number;
+      role?: string;
+      email?: string;
+      status?: string;
+    },
   ) {
     try {
-      return await this.userService.findAllUser(role, email, status);
+      return await this.userService.findAllUser(
+        limit,
+        page,
+        role,
+        email,
+        status,
+      );
     } catch (error) {
       throw error;
     }
