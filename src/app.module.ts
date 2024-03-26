@@ -7,9 +7,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import {
   AdminModule,
-  AuthModule,
-  NotificationModule,
   AnnouncementModule,
+  AuthModule,
+  CourseModule,
+  NotificationModule,
   StudentModule,
   TeacherModule,
   UserModule,
@@ -33,12 +34,13 @@ import {
       },
     }),
     NotificationModule,
-      AnnouncementModule,
+    AnnouncementModule,
     UserModule,
     AuthModule,
     AdminModule,
     TeacherModule,
     StudentModule,
+    CourseModule,
   ],
 })
 export class AppModule {}
