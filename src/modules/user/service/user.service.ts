@@ -85,7 +85,13 @@ export class UserService {
     }
   }
 
-  async findAllUser(role?: string, email?: string, status?: string) {
+  async findAllUser(
+    limit: number = 10,
+    page: number = 1,
+    role?: string,
+    email?: string,
+    status?: string,
+  ) {
     try {
       if (role === UserRole.Admin) {
         return this.model.query('role').eq(UserRole.Admin).exec();
@@ -102,7 +108,22 @@ export class UserService {
       if (status === UserStatus.Active) {
         return this.model.query('status').eq(UserStatus.Active).exec();
       }
-      return this.model.scan().exec(); // return all user in db
+      // const resModel = await this.model.scan().limit(limit).exec(); // return all user in db
+      // const res = this.model.scan().startAt(resModel.lastKey).exec();
+      let response;
+      for (let i = 0; i < page; i++) {
+        response = await this.model.scan().limit(limit).exec();
+      }
+      console.log('first response', response);
+      // const currentIndex = (page - 1) * limit;
+      // console.log(currentIndex);
+      // response = await this.model
+      //   .scan()
+      //   .startAt(response?.lastKey as any)
+      //   .limit(limit)
+      //   .exec();
+      // console.log('final response', response);
+      return response;
     } catch (error) {
       throw error;
     }
