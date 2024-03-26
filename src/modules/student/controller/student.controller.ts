@@ -58,10 +58,18 @@ export class StudentController {
     return student;
   }
 
-  @Roles(UserRole.Admin)
+  @Roles(UserRole.Admin, UserRole.Teacher)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Post(':id')
   delete(@Param('id') id: string) {
     return this.studentService.delete({ id });
+  }
+
+  // Add/Remove Student into course
+  @Roles(UserRole.Admin, UserRole.Teacher)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Post('/enroll/:id')
+  enroll(@Param('id') id: string, @Body() body: any) {
+    return this.studentService.enroll({ id }, body.courseId, body.method);
   }
 }

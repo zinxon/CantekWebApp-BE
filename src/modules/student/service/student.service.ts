@@ -67,4 +67,29 @@ export class StudentService {
   delete(key: StudentKey) {
     return this.model.delete(key);
   }
+
+  async enroll(studentKey: StudentKey, courseIdList: string[], method: string) {
+    // help me write a function to add list of courseId from courseId param into student's courseID
+    const student = await this.model.get(studentKey);
+    // Combine the arrays and convert them into a Set to eliminate duplicates
+    let finalCourseList = [''];
+    if (method === 'add') {
+      const combinedSet = new Set([
+        ...(student.courseId as string[]),
+        ...courseIdList,
+      ]);
+      // Convert the Set back to an array
+      finalCourseList = Array.from(combinedSet);
+    } else if (method === 'remove') {
+      const studentCourseList = student.courseId || [''];
+      finalCourseList = studentCourseList.filter(
+        (item) => !courseIdList.includes(item),
+      );
+    }
+    const res = await this.model.update({
+      id: studentKey.id,
+      courseId: finalCourseList,
+    });
+    return res;
+  }
 }
